@@ -14,10 +14,10 @@
   var shareBtn = $('shareBtn');
   if (shareBtn) shareBtn.addEventListener('click', function () {
     var url = window.location.href;
-    function done() { shareBtn.textContent = '✓ ကူးပြီးပြီ / Copied!'; setTimeout(function () { shareBtn.textContent = '🔗 Share / မျှဝေမယ်'; }, 2000); }
+    function done() { shareBtn.textContent = '✓ Copied!'; setTimeout(function () { shareBtn.textContent = '🔗 Share'; }, 2000); }
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(url).then(done, function () { window.prompt('ဒီ link ကို ကူးပါ:', url); });
-    } else { window.prompt('ဒီ link ကို ကူးပါ:', url); }
+      navigator.clipboard.writeText(url).then(done, function () { window.prompt('Copy this link:', url); });
+    } else { window.prompt('Copy this link:', url); }
   });
 
   /* ---------- Settings: key stored ONLY in localStorage ---------- */
@@ -28,7 +28,7 @@
     if (localStorage.getItem(LS_MODEL)) $('apiModel').value = localStorage.getItem(LS_MODEL);
     if (localStorage.getItem(LS_KEY)) {
       $('apiKey').value = localStorage.getItem(LS_KEY);
-      $('keyStatus').textContent = 'Key အခြေအနေ: ✓ သိမ်းထားပြီးပါပြီ (ဒီ browser ထဲမှာပဲ)';
+      $('keyStatus').textContent = 'Key status: ✓ Saved (in this browser only)';
       $('noKeyNotice').style.display = 'none';
     }
   } catch (e) { /* localStorage unavailable — continue without saving */ }
@@ -40,22 +40,22 @@
 
   $('saveKeyBtn').addEventListener('click', function () {
     var k = getKey();
-    if (!k) { $('keyStatus').textContent = 'Key အခြေအနေ: Key အရင် ရိုက်ထည့်ပါ'; return; }
+    if (!k) { $('keyStatus').textContent = 'Key status: please enter a key first'; return; }
     try {
       localStorage.setItem(LS_KEY, k);
       localStorage.setItem(LS_EP, $('apiEndpoint').value.trim());
       localStorage.setItem(LS_MODEL, $('apiModel').value.trim());
     } catch (e) {
-      $('keyStatus').textContent = 'Key အခြေအနေ: browser က သိမ်းခွင့် မပေးပါ — ဒီ session မှာပဲ သုံးလို့ရပါတယ်';
+      $('keyStatus').textContent = 'Key status: browser refused to save — the key works only for this session';
       return;
     }
-    $('keyStatus').textContent = 'Key အခြေအနေ: ✓ သိမ်းပြီးပါပြီ (ဒီ browser ထဲမှာပဲ)';
+    $('keyStatus').textContent = 'Key status: ✓ Saved (in this browser only)';
     updateNoKeyNotice();
   });
   $('clearKeyBtn').addEventListener('click', function () {
     try { localStorage.removeItem(LS_KEY); } catch (e) {}
     $('apiKey').value = '';
-    $('keyStatus').textContent = 'Key အခြေအနေ: ဖျက်ပြီးပါပြီ';
+    $('keyStatus').textContent = 'Key status: deleted';
     updateNoKeyNotice();
   });
 
@@ -64,7 +64,7 @@
     var endpoint = ($('apiEndpoint').value || '').trim() || 'https://openrouter.ai/api/v1/chat/completions';
     var model = ($('apiModel').value || '').trim() || 'meta-llama/llama-3.3-70b-instruct:free';
     if (!key) return null;
-    var messages = [{ role: 'system', content: 'You are a helpful assistant. Answer in Burmese unless the user asks in English. Keep answers clear and short.' }];
+    var messages = [{ role: 'system', content: 'You are a helpful assistant. Answer in English. Keep answers clear and short.' }];
     chatHistory.slice(-10).forEach(function (m) { messages.push(m); });
     messages.push({ role: 'user', content: userText });
     var res = await fetch(endpoint, {
@@ -78,7 +78,7 @@
     }
     var data = await res.json();
     var out = data && data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
-    return out || '(အဖြေ ဗလာ ဖြစ်နေပါတယ်)';
+    return out || '(empty reply)';
   }
 
   async function sendChat(text) {
@@ -87,10 +87,10 @@
     addMsg(input, 'user');
     chatHistory.push({ role: 'user', content: input });
     $('chatInput').value = '';
-    $('aiStatus').textContent = 'AI ဖြေနေပါတယ်…';
+    $('aiStatus').textContent = 'AI is replying…';
     if (!getKey()) {
-      addMsg('⚠️ API Key မရှိသေးလို့ AI အဖြေ မရသေးပါ။ Settings မှာ ကိုယ့် key ထည့်ပါ။\n\nOffline အကူအညီ: "Offline အကျဉ်းချုပ်" ဒါမှမဟုတ် "Offline Post Template" ခလုတ်ကို သုံးကြည့်ပါ။', 'sys');
-      $('aiStatus').textContent = 'Key မရှိပါ — offline helper သုံးပါ';
+      addMsg('⚠️ No API key yet, so the AI cannot reply. Add your key in Settings.\n\nOffline help: try the "Offline Summary" or "Offline Post Template" button.', 'sys');
+      $('aiStatus').textContent = 'No key — use the offline helpers';
       return;
     }
     try {
@@ -99,8 +99,8 @@
       chatHistory.push({ role: 'assistant', content: reply });
       $('aiStatus').textContent = '';
     } catch (e) {
-      addMsg('❌ AI ခေါ်တာ မအောင်မြင်ပါ: ' + e.message + '\n\nစစ်ပါ: (1) Key မှန်လား (2) Endpoint / Model နာမည် မှန်လား (3) Internet ရှိလား', 'sys');
-      $('aiStatus').textContent = 'Error — အပေါ်က အကြောင်းကို စစ်ပါ';
+      addMsg('❌ Could not reach the AI: ' + e.message + '\n\nCheck: (1) Is the key correct? (2) Are the endpoint and model name correct? (3) Are you online?', 'sys');
+      $('aiStatus').textContent = 'Error — check the message above';
     }
   }
   $('sendBtn').addEventListener('click', function () { sendChat(); });
@@ -108,44 +108,44 @@
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChat(); }
   });
   $('testKeyBtn').addEventListener('click', async function () {
-    if (!getKey()) { $('keyStatus').textContent = 'Key အခြေအနေ: Key အရင် ရိုက်ထည့်ပါ'; return; }
-    $('keyStatus').textContent = 'စမ်းနေပါတယ်…';
+    if (!getKey()) { $('keyStatus').textContent = 'Key status: please enter a key first'; return; }
+    $('keyStatus').textContent = 'Testing…';
     try {
-      var r = await callAI('Hello — reply with one short Burmese greeting.');
-      $('keyStatus').textContent = '✓ Key အလုပ်လုပ်ပါတယ်: ' + String(r).slice(0, 80);
-    } catch (e) { $('keyStatus').textContent = '❌ Key စမ်းတာ မအောင်ပါ: ' + e.message.slice(0, 200); }
+      var r = await callAI('Hello — reply with one short English greeting.');
+      $('keyStatus').textContent = '✓ Key works: ' + String(r).slice(0, 80);
+    } catch (e) { $('keyStatus').textContent = '❌ Key test failed: ' + e.message.slice(0, 200); }
   });
   $('clearChatBtn').addEventListener('click', function () {
     $('chatLog').innerHTML = ''; chatHistory = [];
-    addMsg('Chat ရှင်းပြီးပါပြီ။ ဘာကူညီပေးရမလဲ?', 'ai');
+    addMsg('Chat cleared. How can I help?', 'ai');
   });
   document.querySelectorAll('#quickActions .chip').forEach(function (chip) {
     chip.addEventListener('click', function () {
       var action = chip.getAttribute('data-prompt');
       var topic = ($('chatInput').value || '').trim();
-      sendChat(topic ? action + ': ' + topic : action + ' — အကြောင်းအရာ: ' + (topic || ''));
+      sendChat(topic ? action + ': ' + topic : action + ' — topic: ' + (topic || ''));
     });
   });
 
   /* ---------- Offline helpers — no network, no key needed ---------- */
   function offlineSummary() {
     var text = ($('chatInput').value || '').trim();
-    if (!text) { addMsg('Offline အကျဉ်းချုပ်: အရင် အပေါ်က စာရိုက်ထည့်ပါ။', 'sys'); return; }
-    var sentences = text.split(/(?<=[.!?။])\s+/).filter(function (s) { return s.trim().length > 1; });
-    if (sentences.length <= 3) { addMsg('📝 အကျဉ်းချုပ် (offline):\n' + text, 'ai'); return; }
+    if (!text) { addMsg('Offline summary: type some text in the box first.', 'sys'); return; }
+    var sentences = text.split(/(?<=[.!?])\s+/).filter(function (s) { return s.trim().length > 1; });
+    if (sentences.length <= 3) { addMsg('📝 Summary (offline):\n' + text, 'ai'); return; }
     var scored = sentences.map(function (s) {
       var words = s.trim().split(/\s+/).length;
       var score = Math.min(words, 25);
-      if (/အရေးကြီး|အဓိက|ရလဒ်|ဆုံးဖြတ်|ပထမ|နောက်/i.test(s)) score += 5;
+      if (/important|key|result|decide|first|next/i.test(s)) score += 5;
       return { s: s.trim(), score: score };
     });
     scored.sort(function (a, b) { return b.score - a.score; });
     var top = scored.slice(0, 3).map(function (x) { return '• ' + x.s; }).join('\n');
-    addMsg('📝 အကျဉ်းချုပ် (offline — စက်ထဲမှာပဲ တွက်ထားတာ):\n' + top, 'ai');
+    addMsg('📝 Summary (offline — computed on this device only):\n' + top, 'ai');
   }
   function offlinePost() {
-    var topic = ($('chatInput').value || '').trim() || 'ဒီနေ့ရဲ့ သတင်းကောင်း';
-    var tpl = '📣 ' + topic + '\n\nဒီနေ့ ' + topic + ' အကြောင်း ပြောပြချင်ပါတယ်။\nသင်ရော ဘယ်လိုထင်လဲ? Comment မှာ ပြောပြပေးပါ 👇\n\n#Myanmar #News #Update';
+    var topic = ($('chatInput').value || '').trim() || "Today's good news";
+    var tpl = '📣 ' + topic + '\n\nI want to share something about ' + topic + ' today.\nWhat do you think? Tell me in the comments 👇\n\n#AI #News #Update';
     addMsg('📣 Post Template (offline):\n' + tpl, 'ai');
   }
   $('offlineSummaryBtn').addEventListener('click', offlineSummary);

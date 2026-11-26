@@ -1,51 +1,49 @@
-# 🤖 AI Agent — အခမဲ့ AI စကားပြော Tool
+# 🤖 AI Agent — Free AI Chat Tool
 
 Free AI Agent chat tool — standalone, one tool only. No server, no login, no payment.
 
-အခမဲ့ AI Agent tool တစ်ခုတည်းပါ။ Server မလို၊ Login မလို၊ ငွေမပေးရပါ။
+## What it does
 
-## ဘာလုပ်ပေးလဲ — What it does
+- 💬 **Chat** — talk to the AI (just type a message)
+- 📣 **Write a Facebook post** — ask it to write a post
+- 📝 **Summarize this text** — summarize long text
+- 🌐 **Translate Myanmar-English** — translate between Myanmar and English
+- 💡 **Generate caption / idea** — generate captions and ideas
+- 📝 **Offline Summary** — without a key, it picks the top 3 key sentences on your device
+- 📣 **Offline Post Template** — without a key, it gives you a post template
 
-- 💬 **Chat** — AI နဲ့ စကားပြောလို့ရပါတယ် (စာရိုက်မေးရုံ)
-- 📣 **Facebook post ရေးပေးပါ** — post ရေးခိုင်းလို့ရပါတယ်
-- 📝 **စာအကျဉ်းချုပ်ပေးပါ** — စာရှည်ကို အကျဉ်းချုပ်ခိုင်းလို့ရပါတယ်
-- 🌐 **မြန်မာ-အင်္ဂလိပ် ဘာသာပြန်ပါ** — ဘာသာပြန်ခိုင်းလို့ရပါတယ်
-- 💡 **caption / idea ထုတ်ပေးပါ** — caption နဲ့ idea ထုတ်ခိုင်းလို့ရပါတယ်
-- 📝 **Offline အကျဉ်းချုပ်** — Key မရှိရင်တောင် စက်ထဲမှာပဲ အဓိက စာကြောင်း ၃ ကြောင်း ထုတ်ပေးပါတယ်
-- 📣 **Offline Post Template** — Key မရှိရင် post template ထုတ်ပေးပါတယ်
+## How to use
 
-## ဘယ်လိုသုံးမလဲ — How to use
-
-1. ဒီ folder (`index.html`, `style.css`, `app.js`) ကို browser မှာ ဖွင့်ပါ — ဒါမှမဟုတ် GitHub Pages မှာ တင်ပြီး link ကနေ ဖွင့်ပါ။
-2. **Settings** ကို ဖွင့်ပါ။
-3. ကိုယ့်ရဲ့ **OpenAI-compatible API key** ကို ထည့်ပါ — OpenRouter (free model) ဒါမှမဟုတ် FreeModel က key သုံးလို့ရပါတယ်။
+1. Open `index.html` in a browser — or host it on GitHub Pages and open it from the link.
+2. Open **Settings**.
+3. Add your own **OpenAI-compatible API key** — use an OpenRouter (free model) or FreeModel key.
    - Endpoint (default): `https://openrouter.ai/api/v1/chat/completions`
    - Model (default): `meta-llama/llama-3.3-70b-instruct:free`
-   - FreeModel သုံးရင် endpoint နဲ့ model နာမည်ကို FreeModel ကပေးတဲ့ အတိုင်း လဲပါ။
-4. **Key သိမ်းမယ်** ကို နှိပ်ပါ — key ကို ဒီ browser ရဲ့ localStorage ထဲမှာပဲ သိမ်းပါတယ်။
-5. **စမ်းကြည့်မယ်** နဲ့ key အလုပ်လုပ်လား စစ်ပါ။
-6. စာရိုက်မေးပါ၊ ဒါမှမဟုတ် အပေါ်က quick-action ခလုတ်တွေကို နှိပ်ပါ။
+   - If you use FreeModel, change the endpoint and model name to the ones FreeModel gives you.
+4. Click **Save Key** — the key is stored only in this browser's localStorage.
+5. Click **Test Key** to check whether the key works.
+6. Type a message, or tap one of the quick-action buttons above the chat.
 
-Key မရှိရင် AI အဖြေ မရပါ — ဒါပေမယ့် Offline အကျဉ်းချုပ်နဲ့ Post Template ကို သုံးလို့ရပါတယ်။
+Without a key, the AI cannot reply — but the Offline Summary and Post Template still work.
 
-## GitHub Pages မှာ အခမဲ့ တင်နည်း — Deploy free on GitHub Pages
+## Deploy free on GitHub Pages
 
-1. GitHub မှာ repo အသစ် ဖွင့်ပါ (ဥပမာ `ai-agent`)၊ Public ထား။
-2. ဒီ folder ထဲက `index.html`, `style.css`, `app.js`, `README.md` တို့ကို repo ထဲ တင်ပါ။
-3. GitHub repo → **Settings → Pages** → **Build and deployment → Source: Deploy from a branch** → Branch: `main`, Folder: `/ (root)` → **Save**။
-4. ခဏစောင့်ပြီး Pages က ပေးတဲ့ link (`https://<username>.github.io/ai-agent/`) ကနေ ဖွင့်သုံးပါ။
+1. Create a new repo on GitHub (e.g. `ai-agent`), set it to Public.
+2. Upload `index.html`, `style.css`, `app.js`, and `README.md` to the repo.
+3. GitHub repo → **Settings → Pages** → **Build and deployment → Source: Deploy from a branch** → Branch: `main`, Folder: `/ (root)` → **Save**.
+4. Wait a moment, then open the site from the Pages link (`https://<username>.github.io/ai-agent/`).
 
-## Privacy — လုံခြုံမှု
+## Privacy
 
-- 🔒 API key ကို **browser localStorage ထဲမှာပဲ** သိမ်းပါတယ် — code ထဲမှာ key မရှိဘူး၊ server ကို key မပို့ဘူး။
-- 🔒 စာတွေ၊ chat history တွေက ဒီ စက်ထဲမှာပဲ — server မရှိလို့ ဘယ်မှ မရောက်ဘူး။
-- 🔒 AI သုံးရင်တော့ ကိုယ်ရွေးတဲ့ API endpoint ကိုပဲ စာပို့ပါတယ် (OpenRouter / FreeModel)။
-- ⚠️ Password, wallet seed phrase, bank အချက်အလက်တွေ ဘယ်တော့မှ ဒီ chat ထဲ မရိုက်ပါနဲ့။
-- Key ကို ဖျက်ချင်ရင် **Key ဖျက်မယ်** ကို နှိပ်ပါ။
+- 🔒 Your API key is stored **only in browser localStorage** — it is not in the code, and it is not sent to any server.
+- 🔒 Your messages and chat history stay on this device — there is no server, so they go nowhere.
+- 🔒 When you use the AI, your message goes only to the API endpoint you chose (OpenRouter / FreeModel).
+- ⚠️ Never type your password, wallet seed phrase, or bank details into this chat.
+- To delete the key, click **Delete Key**.
 
 ## Files
 
 - `index.html` — page
 - `style.css` — design
 - `app.js` — chat + settings + offline helpers (client-side only)
-- `README.md` — ဒီဖိုင်
+- `README.md` — this file

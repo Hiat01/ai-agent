@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="my">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AI Agent — အခမဲ့ AI စကားပြော Tool</title>
+<title>AI Agent — Free AI Chat Tool</title>
 <meta name="description" content="Free AI Agent chat tool. Bring your own OpenAI-compatible API key (OpenRouter / FreeModel). No server, no login, no payment. Key stays in your browser only.">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -12,79 +12,79 @@
   <header class="hero">
     <div class="hero-row">
       <div>
-        <h1>🤖 AI Agent<br>အခမဲ့ AI စကားပြော Tool</h1>
-        <p>မေးချင်တာမေး၊ စာရေးခိုင်း၊ အကျဉ်းချုပ်ခိုင်းလို့ရပါတယ်။</p>
+        <h1>🤖 AI Agent<br>Free AI Chat Tool</h1>
+        <p>Ask anything, write text, and summarize — all in one place.</p>
         <div>
-          <span class="badge">✓ အခမဲ့ — Free</span>
-          <span class="badge">✓ Login မလို — No login</span>
-          <span class="badge">✓ ငွေမပေးရ — No payment</span>
-          <span class="badge">✓ Key က စက်ထဲမှာပဲ — Privacy-first</span>
+          <span class="badge">✓ Free</span>
+          <span class="badge">✓ No login</span>
+          <span class="badge">✓ No payment</span>
+          <span class="badge">✓ Key stays on your device — Privacy-first</span>
         </div>
       </div>
-      <button class="btn btn-light" id="shareBtn" type="button">🔗 Share / မျှဝေမယ်</button>
+      <button class="btn btn-light" id="shareBtn" type="button">🔗 Share</button>
     </div>
   </header>
 
   <main class="card">
     <h2>🤖 AI Agent <small>AI Agent — Chat</small></h2>
-    <p>Facebook post ရေးတာ၊ စာအကျဉ်းချုပ်တာ၊ ဘာသာပြန်တာ၊ caption / idea ထုတ်တာတွေ လုပ်ပေးပါတယ်။</p>
+    <p>Write Facebook posts, summarize text, translate, and generate captions and ideas.</p>
 
     <div class="notice" id="noKeyNotice">
-      <b>⚠️ API Key မရှိသေးပါ — No API key yet</b><br>
-      AI ကို သုံးဖို့ ကိုယ့်ရဲ့ <b>OpenAI-compatible API key</b> (OpenRouter / FreeModel) ကို အောက်မှာ ထည့်ပါ။
-      Key ကို ဒီ browser ရဲ့ localStorage ထဲမှာပဲ သိမ်းပါတယ် — code ထဲမှာ မရှိဘူး၊ တခြားနေရာ မပို့ဘူး။
-      Key မရှိရင်လည်း အောက်က <b>offline helper</b> တွေ သုံးလို့ရပါတယ်။
+      <b>⚠️ No API key yet</b><br>
+      To use the AI, add your own <b>OpenAI-compatible API key</b> (OpenRouter / FreeModel) below.
+      The key is stored only in this browser's localStorage — it is not in the code and is not sent anywhere else.
+      Without a key, you can still use the <b>offline helpers</b> below.
     </div>
 
     <details>
-      <summary>⚙️ Settings / ဆက်တင် — API Key, Endpoint, Model</summary>
+      <summary>⚙️ Settings — API Key, Endpoint, Model</summary>
       <label for="apiEndpoint">Endpoint URL</label>
       <input type="url" id="apiEndpoint" value="https://openrouter.ai/api/v1/chat/completions">
       <div class="row">
         <div>
           <label for="apiModel">Model name</label>
           <input type="text" id="apiModel" value="meta-llama/llama-3.3-70b-instruct:free" placeholder="e.g. meta-llama/llama-3.3-70b-instruct:free">
-          <p class="status">FreeModel သုံးရင် model နာမည်ကို FreeModel ကပေးတဲ့ နာမည်နဲ့ လဲပါ (ဥပမာ glm-5.3-flash)။ Endpoint ကိုလည်း FreeModel ရဲ့ URL နဲ့ လဲပါ။</p>
+          <p class="status">If you use FreeModel, change the model name to the one FreeModel gives you (e.g. glm-5.3-flash). Also change the endpoint to FreeModel's URL.</p>
         </div>
         <div>
-          <label for="apiKey">API Key (ကိုယ့်ဟာကိုယ် ထည့်ပါ)</label>
-          <input type="password" id="apiKey" placeholder="ဒီမှာ key ရိုက်ထည့်ပါ — ဘယ်သူမှ မမြင်ရပါ" autocomplete="off">
+          <label for="apiKey">API Key (enter your own)</label>
+          <input type="password" id="apiKey" placeholder="Paste your key here — nobody else can see it" autocomplete="off">
         </div>
       </div>
       <div class="row">
-        <button class="btn btn-primary" id="saveKeyBtn" type="button">💾 Key သိမ်းမယ်</button>
-        <button class="btn btn-ghost" id="clearKeyBtn" type="button">🗑️ Key ဖျက်မယ်</button>
-        <button class="btn btn-ghost" id="testKeyBtn" type="button">🔍 စမ်းကြည့်မယ်</button>
+        <button class="btn btn-primary" id="saveKeyBtn" type="button">💾 Save Key</button>
+        <button class="btn btn-ghost" id="clearKeyBtn" type="button">🗑️ Delete Key</button>
+        <button class="btn btn-ghost" id="testKeyBtn" type="button">🔍 Test Key</button>
       </div>
-      <p class="status" id="keyStatus">Key အခြေအနေ: မသိမ်းရသေးပါ</p>
-      <p class="status">⚠️ သတိ: password, wallet seed phrase, bank အချက်အလက်တွေ ဘယ်တော့မှ ဒီ chat ထဲ မရိုက်ပါနဲ့။</p>
+      <p class="status" id="keyStatus">Key status: not saved yet</p>
+      <p class="status">⚠️ Warning: never type your password, wallet seed phrase, or bank details into this chat.</p>
     </details>
 
     <div class="chips" id="quickActions">
-      <button class="chip" type="button" data-prompt="Facebook post ရေးပေးပါ">📣 Facebook post ရေးပေးပါ</button>
-      <button class="chip" type="button" data-prompt="စာအကျဉ်းချုပ်ပေးပါ">📝 စာအကျဉ်းချုပ်ပေးပါ</button>
-      <button class="chip" type="button" data-prompt="မြန်မာ-အင်္ဂလိပ် ဘာသာပြန်ပါ">🌐 မြန်မာ-အင်္ဂလိပ် ဘာသာပြန်ပါ</button>
-      <button class="chip" type="button" data-prompt="caption / idea ထုတ်ပေးပါ">💡 caption / idea ထုတ်ပေးပါ</button>
+      <button class="chip" type="button" data-prompt="Write a Facebook post">📣 Write a Facebook post</button>
+      <button class="chip" type="button" data-prompt="Summarize this text">📝 Summarize this text</button>
+      <button class="chip" type="button" data-prompt="Translate Myanmar-English">🌐 Translate Myanmar-English</button>
+      <button class="chip" type="button" data-prompt="Generate caption / idea">💡 Generate caption / idea</button>
     </div>
 
     <div class="chat" id="chatLog" aria-live="polite">
-      <div class="msg ai">မင်္ဂလာပါ! 👋 ဘာကူညီပေးရမလဲ? အောက်မှာ စာရိုက်မေးပါ၊ ဒါမှမဟုတ် အပေါ်က ခလုတ်တစ်ခုကို နှိပ်ပါ။<br><br>Key မရှိရင်: Facebook post template နဲ့ စာအကျဉ်းချုပ် (offline) ကို သုံးပေးနိုင်ပါတယ်။</div>
+      <div class="msg ai">Hello! 👋 How can I help? Type a message below, or tap one of the buttons above.<br><br>Without a key, you can use the Facebook post template and the offline summarizer.</div>
     </div>
 
-    <label for="chatInput">မေးခွန်း / စာ — Question / text</label>
-    <textarea id="chatInput" placeholder="ဥပမာ: ဘောလုံးအကြောင်း Facebook post တစ်ခု ရေးပေးပါ…"></textarea>
+    <label for="chatInput">Question / text</label>
+    <textarea id="chatInput" placeholder="e.g. Write a Facebook post about football…"></textarea>
     <div class="row">
-      <button class="btn btn-primary" id="sendBtn" type="button">📤 ပို့မယ် / Send</button>
-      <button class="btn btn-ghost" id="offlineSummaryBtn" type="button">📝 Offline အကျဉ်းချုပ်</button>
+      <button class="btn btn-primary" id="sendBtn" type="button">📤 Send</button>
+      <button class="btn btn-ghost" id="offlineSummaryBtn" type="button">📝 Offline Summary</button>
       <button class="btn btn-ghost" id="offlinePostBtn" type="button">📣 Offline Post Template</button>
-      <button class="btn btn-ghost" id="clearChatBtn" type="button">🧹 Chat ရှင်းမယ်</button>
+      <button class="btn btn-ghost" id="clearChatBtn" type="button">🧹 Clear Chat</button>
     </div>
     <p class="status" id="aiStatus"></p>
   </main>
 
   <footer>
-    <p>🔒 Privacy: စာတွေ၊ API key တွေ ဒီ စက်ထဲကပဲ — server ကို ဘာမှ မပို့ပါဘူး။ AI သုံးရင်တော့ ကိုယ်ရွေးတဲ့ API endpoint ကိုပဲ စာပို့ပါတယ်။<br>
-    Free forever — GitHub Pages မှာ အခမဲ့ တင်လို့ရပါတယ်။ README.md ကို ဖတ်ပါ။</p>
+    <p>🔒 Privacy: your messages and API key stay on this device — nothing is sent to any server. When you use the AI, your message goes only to the API endpoint you chose.<br>
+    Free forever — you can host it free on GitHub Pages. See README.md.</p>
   </footer>
 </div>
 <script src="app.js"></script>
